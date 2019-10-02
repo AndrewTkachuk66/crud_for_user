@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import model.User;
 import service.UserService;
 
@@ -30,31 +27,45 @@ public class UserController {
 
     //For add and update users both
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
-    public String addUser(@ModelAttribute("user") User user){
-        if(user.getId() == 0){
-            //new person is added
+    public String addUser(@ModelAttribute("user") User user) {
+        if(user.getId() == null)
             userService.addUser(user);
-        }else {
-            userService.addUser(user);
-        }
+        else userService.updateUser(user);
         return "redirect:/users";
     }
 
     @RequestMapping("/remove/{id}")
-    public String deleteUser(@PathVariable("id") int id){
+    public String deleteUser(@PathVariable("id") String id) {
         userService.deleteUser(id);
         return "redirect:/users";
     }
 
+    @ResponseBody
     @RequestMapping("/getUserById/{id}")
-    public String getUserById(@PathVariable("id") int id, Model model){
-        model.addAttribute("user", userService.getUserById(id));
-        return "user";
+    public User getUserById(@PathVariable("id") String id, Model model) {
+        //model.addAttribute("user", userService.getUserById(id));
+        User user = userService.getUserById(id);
+        if(user != null){
+            return user;
+        }
+        return null;
     }
 
-    @RequestMapping("/getUserByEmail/{email}")
-    public String getUserByEmail(@PathVariable("email") String email, Model model){
-        model.addAttribute("user", userService.getUserByEmail(email));
+    @ResponseBody
+    @RequestMapping("/getUserByEmail")
+    public User getUserByEmail(@RequestParam("email") String email, Model model) {
+        //model.addAttribute("user", userService.getUserByEmail(email));
+        User user = userService.getUserByEmail(email);
+        if(user != null){
+            return user;
+        }
+        return null;
+    }
+
+    @RequestMapping("/edit/{id}")
+    public String editUser(@PathVariable("id") String id, Model model) {
+        model.addAttribute("user", this.userService.getUserById(id));
+        model.addAttribute("listUsers", this.userService.listUsers());
         return "user";
     }
 }

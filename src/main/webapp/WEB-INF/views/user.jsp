@@ -47,11 +47,31 @@
         <tr>
             <td>
                 <form:label path="surname">
-                    <spring:message text="Country"/>
+                    <spring:message text="Surname"/>
                 </form:label>
             </td>
             <td>
                 <form:input path="surname" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form:label path="address">
+                    <spring:message text="Address"/>
+                </form:label>
+            </td>
+            <td>
+                <form:input path="address" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form:label path="email">
+                    <spring:message text="Email"/>
+                </form:label>
+            </td>
+            <td>
+                <form:input path="email" />
             </td>
         </tr>
         <tr>
@@ -79,11 +99,13 @@
             <th width="60">Edit</th>
             <th width="60">Delete</th>
         </tr>
-        <c:forEach items="${listUserss}" var="user">
+        <c:forEach items="${listUsers}" var="user">
             <tr>
                 <td>${user.id}</td>
                 <td>${user.name}</td>
                 <td>${user.surname}</td>
+                <td>${user.address}</td>
+                <td>${user.email}</td>
                 <td><a href="<c:url value='/edit/${user.id}' />" >Edit</a></td>
                 <td><a href="<c:url value='/remove/${user.id}' />" >Delete</a></td>
             </tr>

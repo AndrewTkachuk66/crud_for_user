@@ -1,13 +1,18 @@
 package model;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name ="user")
+@Proxy(lazy = false)
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private String id;
     private String name;
     private String surname;
     private String email;
@@ -15,7 +20,7 @@ public class User {
 
     public User(){}
 
-    public User(int id, String name, String surname, String email, String address) {
+    public User(String id, String name, String surname, String email, String address) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -23,11 +28,11 @@ public class User {
         this.address = address;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

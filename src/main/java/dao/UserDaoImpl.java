@@ -19,21 +19,23 @@ public class UserDaoImpl implements UserDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<User> listUsers() {
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         List<User> usersList = session.createQuery("from User").list();
         for(User user : usersList){
             //logger.info("Person List::"+user);
         }
         return usersList;
     }
+
     @Override
     public void addUser(User user) {
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.persist(user);
     }
 
+
     @Override
-    public void deleteUser(int id) {
+    public void deleteUser(String id) {
         Session session = this.sessionFactory.getCurrentSession();
         User user = (User) session.load(User.class, id);
         if(user != null){
@@ -43,21 +45,21 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateUser(User user) {
-        Session session = this.sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         session.update(user);
     }
 
     @Override
-    public User getUserById(int id) {
-        Session session = this.sessionFactory.getCurrentSession();
+    public User getUserById(String id) {
+        Session session = sessionFactory.getCurrentSession();
         User user = (User) session.load(User.class, id);
         return user;
     }
 
     @Override
     public User getUserByEmail(String email) {
-        Session session = this.sessionFactory.getCurrentSession();
-        User user = (User) session.load(User.class, email);
+        Session session = sessionFactory.getCurrentSession();
+        User user = (User) session.createQuery("FROM User WHERE email like :email").setString("email",email).uniqueResult();
         return user;
     }
 }
