@@ -43,7 +43,6 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/getUserById/{id}")
     public User getUserById(@PathVariable("id") String id, Model model) {
-        //model.addAttribute("user", userService.getUserById(id));
         User user = userService.getUserById(id);
         if(user != null){
             return user;
@@ -54,7 +53,6 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/getUserByEmail")
     public User getUserByEmail(@RequestParam("email") String email, Model model) {
-        //model.addAttribute("user", userService.getUserByEmail(email));
         User user = userService.getUserByEmail(email);
         if(user != null){
             return user;

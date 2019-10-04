@@ -3,13 +3,15 @@ package dao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import model.User;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-    //private static final Logger logger = LoggerFactory.getLogger(PersonDAOImpl.class);
+    //private static final Logger logger = (Logger) LoggerFactory.getLogger(UserDaoImpl.class);
     private SessionFactory sessionFactory;
 
     public void setSessionFactory(SessionFactory sf){
@@ -22,7 +24,7 @@ public class UserDaoImpl implements UserDao {
         Session session = sessionFactory.getCurrentSession();
         List<User> usersList = session.createQuery("from User").list();
         for(User user : usersList){
-            //logger.info("Person List::"+user);
+           // logger.info("Person List::"+user);
         }
         return usersList;
     }

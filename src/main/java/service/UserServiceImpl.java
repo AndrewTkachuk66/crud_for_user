@@ -6,9 +6,12 @@ import model.User;
 import javax.transaction.Transactional;
 import java.util.List;
 
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private UserDao userDao;
+    private static final String patternForNameAndSurname = "[a-zA-Z]{2,10}";
+    private static final String patternForAddress = "^[_A-Za-z0-9-\\+ ]{2,23}";
+    private static final String patternForEmail = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
@@ -22,20 +25,25 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public void addUser(User user) {
-        userDao.addUser(user);
+    public User addUser(User user) {
+        if (validateDataFromUser(user))
+            userDao.addUser(user);
+        return user;
     }
 
     @Override
     @Transactional
-    public void deleteUser(String id) {
+    public String deleteUser(String id) {
         userDao.deleteUser(id);
+        return id;
     }
 
     @Override
     @Transactional
-    public void updateUser(User user) {
-        userDao.updateUser(user);
+    public User updateUser(User user) {
+        if (validateDataFromUser(user))
+            userDao.updateUser(user);
+        return user;
     }
 
     @Override
@@ -48,5 +56,19 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public User getUserByEmail(String email) {
         return userDao.getUserByEmail(email);
+    }
+
+    @Override
+    public boolean validateDataFromUser(User user) {
+        if (!user.getName().matches(patternForNameAndSurname))
+            return false;
+        if (!user.getSurname().matches(patternForNameAndSurname))
+            return false;
+        if (!user.getAddress().matches(patternForAddress))
+            return false;
+        if (!user.getEmail().matches(patternForEmail))
+            return false;
+
+        return true;
     }
 }

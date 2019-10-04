@@ -7,13 +7,17 @@ import java.util.List;
 public interface UserService {
     List<User> listUsers();
 
-    void addUser(User user);
+    User addUser(User user);
 
-    void deleteUser(String id);
+    String deleteUser(String id);
 
-    void updateUser(User user);
+    User updateUser(User user);
 
     User getUserById(String id);
 
     User getUserByEmail(String email);
+
+    boolean validateDataFromUser(User user);
+
+
 }

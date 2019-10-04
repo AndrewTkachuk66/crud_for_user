@@ -12,7 +12,8 @@
         .tg .tg-4eph{background-color:#f9f9f9}
     </style>
 </head>
-<body>
+<body background="http://carpets.com.ua/assets/images/kovropedia/Afganskie/%D0%90%D1%84%D0%B3%D0%B0%D0%BD%D1%81%D0%BA%D0%B8%D0%B5-%D0%BA%D0%BE%D0%B2%D1%80%D1%8B-%D1%84%D0%BE%D1%82%D0%BE-14.png" marginwidth=10% >
+
 <h1>
     Add a user
 </h1>
@@ -93,11 +94,11 @@
 <c:if test="${!empty listUsers}">
     <table class="tg">
         <tr>
-            <th width="80">User ID</th>
-            <th width="120">User Name</th>
-            <th width="120">User Surname</th>
-            <th width="60">Edit</th>
-            <th width="60">Delete</th>
+            <th width="80">ID</th>
+            <th width="120">Name</th>
+            <th width="120">Surname</th>
+            <th width="60">Address</th>
+            <th width="60">Email</th>
         </tr>
         <c:forEach items="${listUsers}" var="user">
             <tr>
